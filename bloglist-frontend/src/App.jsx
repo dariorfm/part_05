@@ -3,10 +3,12 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import Error from './components/Error'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -45,6 +47,10 @@ const App = () => {
         setTitle('')
         setAuthor('')
         setUrl('')
+        setSuccessMessage(`New blog ${returnedBlog.title} by ${returnedBlog.author} added`)
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
       })
   }
 
@@ -65,7 +71,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setErrorMessage('Wrong password or username!!!')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -75,6 +81,7 @@ const App = () => {
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <h2>log in to application</h2>
+      <Error message={errorMessage} />
       <div>
         username
         <input
@@ -134,6 +141,7 @@ const App = () => {
   const showBlogs = () => (
     <div>
       <h2>Blogs</h2>
+      <Notification message={successMessage} />
       <p>{user.name} logged-in
       <button onClick={() => {
         window.localStorage.removeItem('loggedBlogappUser')
@@ -150,8 +158,6 @@ const App = () => {
 
   return (
     <div>
- 
-      <Notification message={errorMessage} />
 
       {user === null ?
         loginForm() :
