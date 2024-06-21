@@ -54,5 +54,5 @@ const BlogForm = ({ createNote }) => {
         </form>
     )
 }
-
+// 5.6 Blog list frontend step6
 export default BlogForm
