@@ -28,16 +28,16 @@ const Blog = ({ blog }) => {
         style={hideWhenVisible}
         onClick={toggleVisibility}
       >view</button>
+      <button
+        style={showWhenVisible}
+        onClick={toggleVisibility}
+      >hide</button>
     </div>
     <div style={showWhenVisible}>
       {blog.url} <br />
       {blog.likes}
       <button>like</button> <br />
       {blog.user.name} <br />
-      <button
-        style={showWhenVisible}
-        onClick={toggleVisibility}
-      >hide</button>
 
 
     </div>
