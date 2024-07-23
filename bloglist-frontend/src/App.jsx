@@ -45,6 +45,21 @@ const App = () => {
       })
   }
 
+  const handleLike = async (id) => {
+    const blog = blogs.find(blog => blog.id === id)
+    const updatedBlog = { ...blog, likes: blog.likes + 1 }
+
+    try {
+      const returnedBlog = await blogService.update(id, updatedBlog)
+      setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+    } catch (exception) {
+      setErrorMessage('Failed to update the blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
     
@@ -115,7 +130,11 @@ const App = () => {
       </p>
       {blogForm()}
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog 
+          key={blog.id}
+          blog={blog}
+          updateLikes={() => handleLike(blog.id)}
+        />
       )}
     </div>
   )
